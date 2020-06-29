@@ -1,0 +1,88 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.require_version ">= 2.2.7"
+
+Vagrant.configure("2") do |config|
+
+   config.vm.synced_folder ".", "/vagrant", disabled: true
+
+   config.ssh.insert_key = false
+
+   config.vm.define "proto-code" do |code|
+      code.vm.box = "launchquickly/focal-desktop64"
+      code.vm.box_version = "0.0.4"
+
+      code.vm.hostname = "proto-code"
+
+      code.vm.network :private_network, ip: "10.205.0.16"
+
+      code.vm.provider "virtualbox" do |vb|
+         vb.gui = true
+         vb.memory = 4096
+         vb.cpus = 2
+         vb.customize ["modifyvm", :id, "--vram", "128"]
+      end
+
+      code.vm.provision "shell", inline: <<-SHELL
+         snap install code --classic
+      SHELL
+
+      # Run as unpriviliged user to configure for 'vagrant' user
+      code.vm.provision "shell", privileged: false, inline: <<-SHELL
+         code --install-extension ms-vscode-remote.remote-ssh
+      SHELL
+
+      # Make private keys of instances that vscode will connect to available
+      code.vm.provision "file", source: "./keys/id_rsa_proto", destination: "~/.ssh/id_rsa_proto"
+
+      code.vm.provision "file", source: "./config", destination: "~/.ssh/config"
+
+      code.vm.provision "shell", privileged: false, inline: <<-SHELL
+         chmod 400 ~/.ssh/id_rsa_proto
+         chmod 400 ~/.ssh/config
+      SHELL
+   end
+
+   config.vm.define "proto-server" do |server|
+      server.vm.box = "launchquickly/focal64"
+      server.vm.box_version = "0.0.3"
+
+      server.vm.hostname = "proto-server"
+
+      server.vm.network :private_network, ip: "10.205.0.26"
+
+      server.ssh.private_key_path = ['~/.vagrant.d/insecure_private_key', './keys/id_rsa_proto']
+
+      server.vm.provision "file", source: "./keys/id_rsa_proto.pub", destination: "~/.ssh/authorized_keys"
+
+      server.vm.provision "shell", inline: <<-SHELL
+         nodejs_version=v12.18.1
+         nodejs_distro=linux-x64
+
+         wget https://nodejs.org/dist/${nodejs_version}/node-${nodejs_version}-${nodejs_distro}.tar.xz
+
+         mkdir -p /usr/local/lib/nodejs
+         tar -xJvf node-${nodejs_version}-${nodejs_distro}.tar.xz -C /usr/local/lib/nodejs 
+
+         rm ./node-${nodejs_version}-${nodejs_distro}.tar.xz
+      SHELL
+
+      # Run as unpriviliged user to configure for 'vagrant' user
+      server.vm.provision "shell", privileged: false, inline: <<-SHELL
+         nodejs_version=v12.18.1
+         nodejs_distro=linux-x64
+
+         echo "" >> ~/.profile
+         echo "export PATH=/usr/local/lib/nodejs/node-${nodejs_version}-${nodejs_distro}/bin:$PATH" >> ~/.profile
+
+         git clone https://github.com/launchquickly/prototype-kit.git
+         cd prototype-kit
+         # change repository remote access from https to ssh
+         git remote set-url origin git@github.com:launchquickly/prototype-kit.git
+
+         # TODO - install prototype kit as described at: https://govuk-prototype-kit.herokuapp.com/docs/install/install-the-kit
+
+      SHELL
+   end
+end
