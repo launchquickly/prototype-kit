@@ -1,6 +1,6 @@
 # Set-up development environment
 
-**Objective**: Set-up and install the necessary software to provide a Vagrant based development environment for GOV.UK Prootype Kit
+**Objective**: Set-up and install the necessary software to provide a Vagrant based development environment for GOV.UK Protype Kit
 
 Vagrant based development environment for prototyping. This will consist of 2 VMS:
 
@@ -31,8 +31,10 @@ Vagrant VMs are being used for both desktop and server configurations to make se
     - UK keyboard and formats set-up
     - Timezone set to UTC
 - Git 2.x
+- unzip utility
 - master branch of github.com/launchquickly/prototype-kit repository cloned to /home/vagrant/prototype-kit
     - configured for ssh access
+- Latest version of the GOV.UK Prototype Kit downloaded into /home/vagrant/prototype-kit/projects directory
 
 ## Pre-requisites
 
@@ -61,14 +63,14 @@ C:\Users\AUser\dev\prototype-kit\dev> vagrant up
 
 ### proto-server - these steps can all be executed from proto-code via VS Code remote terminal session (Ctrl + Shift + ` shortcut to open) 
 
-11. (Optional) Configure git set-up
-11.1. Set global gitconfig options, otherwise vagrant name and email will be used:
+10. (Optional) Configure git set-up
+    10.1. Set global gitconfig options, otherwise vagrant name and email will be used:
 ```console
 vagrant@proto-server:~$ git config --global user.name "John Doe"
 vagrant@proto-server:~$ git config --global user.email johndoe@example.com
 ```
-12. (Optional) Generate and upload ssh keys for git operations with github.com or similar:
-12.1. Generate public/private keys. Note if you set a passphrase (recommended) you will have to use commandline to push changes to github.com, etc as VS code does not yet handle passphrases for remote repositories.
+11. (Optional) Generate and upload ssh keys for git operations with github.com or similar:
+    11.1. Generate public/private keys. Note if you set a passphrase (recommended) you will have to use commandline to push changes to github.com, etc as VS code does not yet handle passphrases for remote repositories.
 ```console
 vagrant@proto-server:~$ ssh-keygen -t rsa -b 4096 -C "johndoe@example.com"
 Generating public/private rsa key pair.
@@ -93,11 +95,11 @@ The key's randomart image is:
 +----[SHA256]-----+
 vagrant@proto-server:~$
 ```
-12.2. Copy contents of public key to Github account, or similar.
+    11.2. Copy contents of public key to Github account, or similar.
 ```console
 vagrant@proto-server:~$ cat ~/.ssh/id_rsa.pub
 ```
-12.3. Add any necessary host information to enable git ssh access to ~/.ssh/config. e.g.:
+    11.3. Add any necessary host information to enable git ssh access to ~/.ssh/config. e.g.:
 ```console
 vagrant@proto-server:~$ vi ~/.ssh/config
 
