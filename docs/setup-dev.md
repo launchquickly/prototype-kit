@@ -63,16 +63,17 @@ C:\Users\AUser\dev\prototype-kit\dev> vagrant up
 
 ### proto-server - these steps can all be executed from proto-code via VS Code remote terminal session (Ctrl + Shift + ` shortcut to open) 
 
-10. (Optional) Configure git set-up
-    10.1. Set global gitconfig options, otherwise vagrant name and email will be used:
+ 10. (Optional) Configure git set-up  
+     10.1. Set global gitconfig options, otherwise vagrant name and email will be used:
 
 ```console
 vagrant@proto-server:~$ git config --global user.name "John Doe"
 vagrant@proto-server:~$ git config --global user.email johndoe@example.com
 ```
 
-11. (Optional) Generate and upload ssh keys for git operations with github.com or similar:
-    11.1. Generate public/private keys. Note if you set a passphrase (recommended) you will have to use commandline to push changes to github.com, etc as VS code does not yet handle passphrases for remote repositories.
+ 11. (Optional) Generate and upload ssh keys for git operations with github.com or similar: 
+
+     11.1. Generate public/private keys. Note if you set a passphrase (recommended) you will have to use commandline to push changes to github.com, etc as VS code does not yet handle passphrases for remote repositories.
 
 ```console
 vagrant@proto-server:~$ ssh-keygen -t rsa -b 4096 -C "johndoe@example.com"
@@ -99,13 +100,13 @@ The key's randomart image is:
 vagrant@proto-server:~$
 ```
 
-11.2. Copy contents of public key to Github account, or similar.
+ 11.2. Copy contents of public key to Github account, or similar.
 
 ```console
 vagrant@proto-server:~$ cat ~/.ssh/id_rsa.pub
 ```
 
-11.3. Add any necessary host information to enable git ssh access to ~/.ssh/config. e.g.:
+ 11.3. Add any necessary host information to enable git ssh access to ~/.ssh/config. e.g.:
 
 ```console
 vagrant@proto-server:~$ vi ~/.ssh/config
