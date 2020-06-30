@@ -95,11 +95,11 @@ The key's randomart image is:
 +----[SHA256]-----+
 vagrant@proto-server:~$
 ```
-    11.2. Copy contents of public key to Github account, or similar.
+11.2. Copy contents of public key to Github account, or similar.
 ```console
 vagrant@proto-server:~$ cat ~/.ssh/id_rsa.pub
 ```
-    11.3. Add any necessary host information to enable git ssh access to ~/.ssh/config. e.g.:
+11.3. Add any necessary host information to enable git ssh access to ~/.ssh/config. e.g.:
 ```console
 vagrant@proto-server:~$ vi ~/.ssh/config
 
