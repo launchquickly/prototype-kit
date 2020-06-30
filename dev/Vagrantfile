@@ -66,6 +66,8 @@ Vagrant.configure("2") do |config|
          tar -xJvf node-${nodejs_version}-${nodejs_distro}.tar.xz -C /usr/local/lib/nodejs 
 
          rm ./node-${nodejs_version}-${nodejs_distro}.tar.xz
+
+         apt-get install unzip
       SHELL
 
       # Run as unpriviliged user to configure for 'vagrant' user
@@ -81,8 +83,11 @@ Vagrant.configure("2") do |config|
          # change repository remote access from https to ssh
          git remote set-url origin git@github.com:launchquickly/prototype-kit.git
 
-         # TODO - install prototype kit as described at: https://govuk-prototype-kit.herokuapp.com/docs/install/install-the-kit
-
+         # download the latest kit into the projects directory so it is available to copy
+         cd projects
+         wget -O govuk-prototype-kit.zip https://govuk-prototype-kit.herokuapp.com/docs/download
+         unzip govuk-prototype-kit.zip
+         rm govuk-prototype-kit.zip
       SHELL
    end
 end
