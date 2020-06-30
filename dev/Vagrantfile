@@ -68,6 +68,13 @@ Vagrant.configure("2") do |config|
          rm ./node-${nodejs_version}-${nodejs_distro}.tar.xz
 
          apt-get install unzip
+
+         # VS code needs the number of file handles to be increased to manage npm modules
+         echo "" >> /etc/sysctl.conf
+         echo "fs.inotify.max_user_watches=524288" >> /etc/sysctl.conf
+         sysctl -p
+         # TODO investigate whether these should instead be excluded: 
+         # https://code.visualstudio.com/docs/setup/linux#_visual-studio-code-is-unable-to-watch-for-file-changes-in-this-large-workspace-error-enospc
       SHELL
 
       # Run as unpriviliged user to configure for 'vagrant' user
