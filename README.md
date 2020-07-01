@@ -8,6 +8,7 @@ Project to explore the use of the [GOV.UK Prototype Kit](https://github.com/alph
 
 ## TODOs
 
+- **Look at creating a generic template** that replaces the structure of the gov.uk template blocks as an experiment: https://design-system.service.gov.uk/styles/page-template/#changing-template-content
 - Investigate how Merging from upstream govuk-prototype-kit could work and lower maintenance: https://govuk-prototype-kit.herokuapp.com/docs/
 -updating-the-kit 
 - Vagrantfile - Investigate whether VS Code exclusion on watch files is preferable to /etc/sysctl.conf update: https://code.visualstudio.com/docs/setup/linux#_visual-studio-code-is-unable-to-watch-for-file-changes-in-this-large-workspace-error-enospc
