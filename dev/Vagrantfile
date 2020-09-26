@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.require_version ">= 2.2.7"
+Vagrant.require_version ">= 2.2.10"
 
 Vagrant.configure("2") do |config|
 
@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
 
    config.vm.define "proto-code" do |code|
       code.vm.box = "launchquickly/focal-desktop64"
-      code.vm.box_version = "0.0.4"
+      code.vm.box_version = "0.0.6"
 
       code.vm.hostname = "proto-code"
 
@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
 
    config.vm.define "proto-server" do |server|
       server.vm.box = "launchquickly/focal64"
-      server.vm.box_version = "0.0.3"
+      server.vm.box_version = "0.0.5"
 
       server.vm.hostname = "proto-server"
 
@@ -57,7 +57,7 @@ Vagrant.configure("2") do |config|
       server.vm.provision "file", source: "./keys/id_rsa_proto.pub", destination: "~/.ssh/authorized_keys"
 
       server.vm.provision "shell", inline: <<-SHELL
-         nodejs_version=v12.18.1
+         nodejs_version=v12.18.4
          nodejs_distro=linux-x64
 
          wget https://nodejs.org/dist/${nodejs_version}/node-${nodejs_version}-${nodejs_distro}.tar.xz
@@ -79,7 +79,7 @@ Vagrant.configure("2") do |config|
 
       # Run as unpriviliged user to configure for 'vagrant' user
       server.vm.provision "shell", privileged: false, inline: <<-SHELL
-         nodejs_version=v12.18.1
+         nodejs_version=v12.18.4
          nodejs_distro=linux-x64
 
          echo "" >> ~/.profile
